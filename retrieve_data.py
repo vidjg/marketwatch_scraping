@@ -251,6 +251,7 @@ if __name__ == '__main__':
                    'XYL', 'YHOO', 'YUM', 'ZBH', 'ZION', 'ZTS']
     data = pd.DataFrame()
     i = 0
+    repeat_time = 0
     error_list = []
     while 1:
         while i < len(ticker_list):
@@ -264,14 +265,27 @@ if __name__ == '__main__':
             except ValueError:
                 print('{0} Error!'.format(ticker))
                 error_list.append(ticker)
-                time.sleep(5)
+                time.sleep(1)
                 i += 1
                 continue
-        if len(error_list) == 0:
+        if len(error_list) == len(ticker_list):
+            repeat_time += 1
+        if len(error_list) == 0 or repeat_time == 10:
+            print(error_list)
             break
         else:
             ticker_list = error_list
             error_list = []
             i = 0
+            repeat_time = 0
             print('Restart!')
-            time.sleep(5)
+            time.sleep(1)
+    # Error_list = ['FSIV', 'MHFI', 'TE', 'TSO', 'TJK', 'TYC']
+    # New_list = ['AAPL', ABMD', 'AJG', 'ALB', 'ALGN', 'ALK', 'AMD', 'ANDV', 'ANSS', 'AOS', 'APTV', 'ARE', 'ARNC',
+    # 'ATVI', 'AWK', 'AYI', 'BF.B', 'BHF', 'BHGE', 'BIIB', 'BKNG', 'BLK', 'BRK.B', 'BSX', 'CBOE', 'CBRE', 'CDNS',
+    # 'CFG', 'CHD', 'CHTR', 'CNC', 'COO', 'COTY', 'CXO', 'DISH', 'DLR', 'DRE', 'DWDP', 'DXC', 'EVHC', 'EVRG', 'EXR',
+    # 'FBHS', 'FISV', 'FL', 'FOX', 'FRT', 'FTV', 'GPN', 'HII', 'HLT', 'HOLX', 'HPE', 'IDXX', 'ILMN', 'INCY', 'INFO',
+    # 'IPGP', 'IQV', 'IT', 'JEF', 'KHC', 'LKQ', 'LNT', 'MAA', 'MGM', 'MMM', 'MSCI', 'MTD', 'NCLH', 'NKTR', 'NWS', 'PKG',
+    # 'PYPL', 'RCL', 'RE', 'REG', 'RJF', 'RMD', 'SBAC', 'SIVB', 'SNPS', 'SPGI', 'SYF', 'TDG', 'TJX', 'TPR', 'TTWO',
+    # 'TWTR', 'UAA', 'UAL', 'UDR', 'ULTA', 'USB', 'VRSK', 'WELL', 'WLTW', 'WRK']
+    # Done!
